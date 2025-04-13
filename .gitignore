@@ -1,0 +1,4 @@
+/bjob-results
+/simulation_results
+*.err
+*.out
