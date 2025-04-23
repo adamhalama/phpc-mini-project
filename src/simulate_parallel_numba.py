@@ -3,6 +3,9 @@ import sys
 import os
 import numpy as np
 from multiprocessing import Pool, cpu_count
+import numba
+from numba import njit
+
 
 def load_floorplan_data(data_dir, building_id):
     """
@@ -33,6 +36,42 @@ def jacobi_solver(simulation_grid, interior_mask, max_iterations, tolerance=1e-6
         if difference < tolerance:
             break
     return current_grid
+
+@njit
+def jacobi_numba(simulation_grid, interior_mask, max_iter, tol):
+    # u has shape (SIZE+2, SIZE+2)
+    # interior_mask has shape (SIZE, SIZE)
+    tmp = np.empty_like(simulation_grid)
+    for it in range(max_iter):
+        delta = 0.0
+        # loop over interior points
+        for i in range(1, simulation_grid.shape[0]-1):
+            for j in range(1, simulation_grid.shape[1]-1):
+                if interior_mask[i-1, j-1]:
+                    new_val = 0.25 * (
+                        simulation_grid[i-1, j] + 
+                        simulation_grid[i+1, j] + 
+                        simulation_grid[i, j-1] + 
+                        simulation_grid[i, j+1]
+                        )
+                    tmp[i, j] = new_val
+                    diff = abs(simulation_grid[i, j] - new_val)
+                    if diff > delta:
+                        delta = diff
+                else:
+                    tmp[i, j] = simulation_grid[i, j]
+        # copy boundaries into the new grid and swap
+        tmp[0, :] = simulation_grid[0, :]
+        tmp[-1, :] = simulation_grid[-1, :]
+        tmp[:, 0] = simulation_grid[:, 0]
+        tmp[:, -1] = simulation_grid[:, -1]
+        
+        simulation_grid, tmp = tmp, simulation_grid
+        if delta < tol:
+            break
+        
+    return simulation_grid
+
 
 def calculate_summary_statistics(simulation_grid, interior_mask):
     """
@@ -86,7 +125,7 @@ if __name__ == '__main__':
     # Parallelize the simulation using static scheduling (dividing tasks evenly among workers)
     worker_count = cpu_count()
     with Pool(processes=worker_count) as pool:
-        simulation_results = pool.starmap(jacobi_solver, simulation_tasks)
+        simulation_results = pool.starmap(jacobi_numba, simulation_tasks)
 
     # Print summary statistics in CSV format
     stat_keys = ['mean_temp', 'std_temp', 'pct_above_18', 'pct_below_15']

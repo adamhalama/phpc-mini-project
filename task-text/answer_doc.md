@@ -127,3 +127,55 @@ Estimated total time (parallel): 6899.9 seconds
 Which is approximately: 1h 54m 60s
 ```
 
+# 6. The amount of iterations needed to reach convergence will vary from floorplan to floorplan.
+*Re-do your parallelization experiment using dynamic scheduling.*
+
+
+## a) Did it get faster? By how much?
+- it did not go noticabely faster with chunk size=1 
+- and even with size=4
+
+
+## b) Did the speed-up improve or worsen?
+- it may have actually worsened a tiny bit, if we would to make a series of calculations, or do it on a larger scale, we could see some difference, but not a big reliable change being able to seen on simulation of 100 floorplans.
+
+# 7. Implement another solution where you rewrite the jacobi function using Numba JIT on the CPU.
+
+## a) Run and time the new solution for a small subset of floorplans. How does the performance compare to the reference?
+- after running 100 simulations with the `jacobi_numba` solver, the time dropped drastically. with 24 cpu cores it went down to `Total runtime: 32 seconds`
+- before the best time for 100 simulations on the same specs was `Total runtime: 151 seconds`. 
+- that is a 5 fold speed increase on the same hardware
+
+## b) Explain your function. How did you ensure your access pattern works well with the CPU cache?
+writing out the nested loops in the order of `rows outer` and `cols innner` ensures that we got the cache efficiency of bringing one full row with all the columns in at a time.
+
+also copying boundaries in bulk def helps the speed
+
+## c) How long would it now take to process all floorplans?
+```
+    ~/Doc/DT/2/PythonHPC/pyhpc-mini-project  python 5.d\)est-time-for-all-floorplans.py                     ✔  pyhpc-mini-project   14:29:20  
+Estimated total time (parallel): 1462.7 seconds
+Which is approximately: 0h 24m 23s
+```
+
+# 8. Implement another solution writing a custom CUDA kernel with Numba. 
+
+To synchronize threads between each iteration, the kernel should only perform a single iteration of the Jacobi solver. Skip the early stopping criteria and just run for a fixed amount of iterations. Write a helper function which takes the same inputs as the reference implementation (except for the atol input which is not needed) and then calls your kernel repeatedly to perform the implementations.
+
+## a) Briefly describe your new solution. How did you structure your kernel and helper function?
+- The kernel is structured structured very simply, the thread computes its coordinates, reads its four neighbours, writes the output, and finishes
+- if the points don't match the mask they are just fixed
+- the threads with (i,j) outside the grid don't do anything
+
+## b) Run and time the new solution for a small subset of floorplans. How does the performance compare to the reference?
+- Sample of 100 floorplans run with this on the a10 took: `Total runtime: 114 seconds` 
+- which is good, but not even close to Numba which was 32, but also that was just using one GPU
+
+## c) How long would it now take to process all floorplans?
+```
+python 5.d\)est-time-for-all-floorplans.py
+Estimated total time: 5210.9 seconds
+Which is approximately: 1h 26m 51s
+```
+
+# 9. 
