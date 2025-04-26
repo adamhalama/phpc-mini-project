@@ -1,14 +1,14 @@
-# 2. task
+# 1 Familiarize yourself with the data. Load and visualize the input data for a few floorplans using a seperate Python script, Jupyter notebook or your preferred tool.
 
-**Familiarize yourself with the provided script. Run and time the reference implementation for a
-small subset of floorplans (e.g., 10 - 20). How long do you estimate it would take to process all
-the floorplans? Perform the timing as a batch job so you get relieable results.**
 
-*How long do you estimate it would take to process all
-the floorplans? Perform the timing as a batch job so you get relieable results.*
+# 2. Familiarize yourself with the provided script. Run and time the reference implementation for a small subset of floorplans (e.g., 10 - 20). 
+
+- **How long do you estimate it would take to process all the floorplans? Perform the timing as a batch job so you get relieable results.**
+
 
 - Elapsed (wall clock) time (h:mm:ss or m:ss): 3:56.88 (for 20 floorplans)
-- 
+
+# 3. Visualize the simulation results for a few floorplans.
 
 # 4. Profile the reference jacobi function using kernprof. Explain the different parts of the function and how much time each part takes.
 
@@ -69,7 +69,9 @@ l20 calculating the convergence criteria also takes up a significant amount of t
 l21 Assigning the updated temperature values back to the main array also is significant
 
 
-# 5. 
+# 5. Make a new Python program where you parallelize the computations over the floorplans. 
+- Use static scheduling such that each worker is assigned the same amount of floorplans to process.
+- You should use no more than 100 floorplans for your timing experiments. Again, use a batch job to ensure consistent results.
 
 ## a) Measure the speed-up as more workers are added. Plot your speed-ups.
 [plot](plot-speedups-with-ht.png)
@@ -160,7 +162,7 @@ Which is approximately: 0h 24m 23s
 
 # 8. Implement another solution writing a custom CUDA kernel with Numba. 
 
-To synchronize threads between each iteration, the kernel should only perform a single iteration of the Jacobi solver. Skip the early stopping criteria and just run for a fixed amount of iterations. Write a helper function which takes the same inputs as the reference implementation (except for the atol input which is not needed) and then calls your kernel repeatedly to perform the implementations.
+ - To synchronize threads between each iteration, the kernel should only perform a single iteration of the Jacobi solver. Skip the early stopping criteria and just run for a fixed amount of iterations. Write a helper function which takes the same inputs as the reference implementation (except for the atol input which is not needed) and then calls your kernel repeatedly to perform the implementations.
 
 ## a) Briefly describe your new solution. How did you structure your kernel and helper function?
 - The kernel is structured structured very simply, the thread computes its coordinates, reads its four neighbours, writes the output, and finishes
@@ -178,4 +180,24 @@ Estimated total time: 5210.9 seconds
 Which is approximately: 1h 26m 51s
 ```
 
-# 9. 
+# 9. Adapt the reference solution to run on the GPU using CuPy.
+
+## a) Run and time the new solution for a small subset of floorplans. How does the performance compare to the reference?
+- Takes quite significantly more time than using CUDA as we did before.
+- So it is comparatively quicker to the original sequential script
+- it took `Total runtime: 242 seconds` for 100simulations which is not terrible
+
+## b) How long would it now take to process all floorplans?
+```
+Time for 100 floorplans: 242.0 seconds
+Estimated total time: 11061.8 seconds
+Which is approximately: 3h 4m 22s
+```
+
+## c) Was anything surprising about the performance?
+- yes definitely, I thought that the GPU would handle it similarly as it did before, but it took something more than 2x the time
+
+# 10. Profile the CuPy solution using the nsys profiler. What is the main issue regarding performance?
+
+*(Hint: see exercises from week 10) Try to fix it.*
+
