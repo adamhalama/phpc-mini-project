@@ -1,0 +1,5 @@
+Buildings analysed: 4571
+Average mean temperature:      14.62 °C
+Average temperature std-dev:   6.77 °C
+≥50 % of area above 18 °C:      750 buildings
+≥50 % of area below 15 °C:      2526 buildings

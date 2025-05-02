@@ -20,7 +20,9 @@ echo "Job started on $(hostname) at $(date)"
 start_time=$(date +%s)
 
 # Run the simulation with detailed timing info
-/usr/bin/time -v python simulate_cupy.py 100
+nsys profile -o cupy_profile \
+    python simulate_cupy.py 100
+
 
 end_time=$(date +%s)
 runtime=$((end_time - start_time))

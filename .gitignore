@@ -2,3 +2,5 @@
 /simulation_results
 *.err
 *.out
+src/cupy/cupy_profile.nsys-rep
+src/cupy/cupy_profile.sqlite
