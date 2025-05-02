@@ -117,6 +117,20 @@ Observed maximum speed-up: 7.61 on 12 cores
 Achieved 82.60% of theoretical maximum
 ```
 
+interestingly when i ran this with 24c this were there the results
+```
+    ~/Doc/DT/2/P/pyhpc-mini-project  python 5.b\)average_parallel_fraction-XeonGold6342.py 
+Core Count | Walltime (plain) | Speedup (plain) | P estimate (plain)
+        24 |            151.00 |           10.72 |             0.946
+
+Average parallel fraction (plain): 0.946
+    ~/Doc/DT/2/P/pyhpc-mini-project  python 5.c\)max-speedup-amdahls-XeonGold6342.py      
+Average parallel fraction (P): 0.946
+Theoretical maximum speed-up (1/(1-P)): 18.52
+Observed maximum speed-up: 10.72 on 24 cores
+Achieved 57.90% of theoretical maximum
+```
+
 - this means that with this script maybe we can throw more cores at it and make it a bit more fast, we'll try and see.
 
 
