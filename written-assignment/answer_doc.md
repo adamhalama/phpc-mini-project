@@ -1,7 +1,9 @@
 # 1 Familiarize yourself with the data. Load and visualize the input data for a few floorplans using a seperate Python script, Jupyter notebook or your preferred tool.
 
 [vizualized-input-data](../src/1/figures/floorplan_10000.png)
-- here we can see the 
+- here we can see the
+- heated walls and the cold walls - cold blue, hot red
+- interior mask which denotes the interior in a white color.
 
 # 2. Familiarize yourself with the provided script. Run and time the reference implementation for a small subset of floorplans (e.g., 10 - 20). 
 
@@ -14,8 +16,6 @@ Estimated total time: 54166.4 seconds
 Which is approximately: 15h 2m 46s
 ```
 
-so would take quite some amount of time
-
 # 3. Visualize the simulation results for a few floorplans.
 
 [floorplan-visualization](../simulation_plots/10000_plot.png)
@@ -23,12 +23,13 @@ so would take quite some amount of time
 
 # 4. Profile the reference jacobi function using kernprof. Explain the different parts of the function and how much time each part takes.
 
+```
 gbarlogin1(s243749) $ python -m line_profiler simulate.py.lprof
 Timer unit: 1e-06 s
-
 Total time: 199.086 s
 File: simulate.py
 Function: jacobi at line 13
+```
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
