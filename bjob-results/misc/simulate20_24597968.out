@@ -1,0 +1,93 @@
+Job started on n-62-31-22 at Tue Apr  8 13:21:23 CEST 2025
+Saved plot for building 10000 to ../simulation_plots/10000_plot.png
+Saved plot for building 10009 to ../simulation_plots/10009_plot.png
+Saved plot for building 10014 to ../simulation_plots/10014_plot.png
+Saved plot for building 10019 to ../simulation_plots/10019_plot.png
+Saved plot for building 10029 to ../simulation_plots/10029_plot.png
+Saved plot for building 10031 to ../simulation_plots/10031_plot.png
+Saved plot for building 10051 to ../simulation_plots/10051_plot.png
+Saved plot for building 10053 to ../simulation_plots/10053_plot.png
+Saved plot for building 10056 to ../simulation_plots/10056_plot.png
+Saved plot for building 10064 to ../simulation_plots/10064_plot.png
+Saved plot for building 10075 to ../simulation_plots/10075_plot.png
+Saved plot for building 10079 to ../simulation_plots/10079_plot.png
+Saved plot for building 10080 to ../simulation_plots/10080_plot.png
+Saved plot for building 10082 to ../simulation_plots/10082_plot.png
+Saved plot for building 10083 to ../simulation_plots/10083_plot.png
+Saved plot for building 10084 to ../simulation_plots/10084_plot.png
+Saved plot for building 10085 to ../simulation_plots/10085_plot.png
+Saved plot for building 10086 to ../simulation_plots/10086_plot.png
+Saved plot for building 10087 to ../simulation_plots/10087_plot.png
+Saved plot for building 10089 to ../simulation_plots/10089_plot.png
+Total runtime: 7 seconds
+Job finished at Tue Apr  8 13:21:30 CEST 2025
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 24597968: <simulate20> in cluster <dcc> Done
+
+Job <simulate20> was submitted from host <gbarlogin1> by user <s243749> in cluster <dcc> at Tue Apr  8 13:21:21 2025
+Job was executed on host(s) <n-62-31-22>, in queue <hpc>, as user <s243749> in cluster <dcc> at Tue Apr  8 13:21:21 2025
+</zhome/af/3/214532> was used as the home directory.
+</zhome/af/3/214532/PyHPC/mini-project/src> was used as the working directory.
+Started at Tue Apr  8 13:21:21 2025
+Terminated at Tue Apr  8 13:21:30 2025
+Results reported at Tue Apr  8 13:21:30 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -q hpc                              # Submit to the hpc queue
+#BSUB -J simulate20                       # Job name: simulate20
+#BSUB -n 1                                # Request 1 core
+#BSUB -R "span[hosts=1]"                  # Ensure the job runs on a single host
+#BSUB -R "rusage[mem=2GB]"                # Request 4GB memory per core
+#BSUB -R "select[model == XeonGold6126]"  # Request a specific CPU model
+#BSUB -M 3GB                              # Kill the job if it exceeds 5GB per core
+#BSUB -W 00:30                            # Set the walltime limit to 30 minutes
+#BSUB -o simulate20_%J.out                # Standard output will be saved to a file with the job-id
+#BSUB -e simulate20_%J.err                # Standard error will be saved to a file with the job-id
+
+source /dtu/projects/02613_2025/conda/conda_init.sh
+conda activate 02613
+
+echo "Job started on $(hostname) at $(date)"
+
+start_time=$(date +%s)
+
+# Run the simulation with detailed timing info
+/usr/bin/time -v python visualize_floorplans.py
+
+end_time=$(date +%s)
+runtime=$((end_time - start_time))
+
+echo "Total runtime: ${runtime} seconds"
+echo "Job finished at $(date)"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   7.37 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     2048.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   75 sec.
+    Turnaround time :                            9 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <simulate20_24597968.err> for stderr output of this job.
+

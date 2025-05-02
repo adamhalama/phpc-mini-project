@@ -1,0 +1,75 @@
+Job started on n-62-12-64 at Mon Apr 21 19:19:33 CEST 2025
+building_id, mean_temp, std_temp, pct_above_18, pct_below_15
+10000, 14.01233878811275, 6.367431059312565, 30.941014791508444, 55.542295034537624
+Total runtime: 4 seconds
+Job finished at Mon Apr 21 19:19:37 CEST 2025
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 24747505: <simulate100_numba_24c> in cluster <dcc> Done
+
+Job <simulate100_numba_24c> was submitted from host <gbarlogin1> by user <s243749> in cluster <dcc> at Mon Apr 21 19:19:32 2025
+Job was executed on host(s) <n-62-12-64>, in queue <hpc>, as user <s243749> in cluster <dcc> at Mon Apr 21 19:19:32 2025
+</zhome/af/3/214532> was used as the home directory.
+</zhome/af/3/214532/PyHPC/mini-project/src> was used as the working directory.
+Started at Mon Apr 21 19:19:32 2025
+Terminated at Mon Apr 21 19:19:37 2025
+Results reported at Mon Apr 21 19:19:37 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -q hpc                              # Submit to the hpc queue
+#BSUB -J simulate100_numba_24c                       # Job name: simulate20
+#BSUB -n 1                                # Request 1 core
+#BSUB -R "span[hosts=1]"                  # Ensure the job runs on a single host
+#BSUB -R "rusage[mem=1GB]"                # Request xGB memory per core
+#BSUB -R "select[model == XeonGold6342]"  # Request a specific CPU model
+#BSUB -M 2GB                              # Kill the job if it exceeds xGB per core
+#BSUB -W 00:30                            # Set the walltime limit to 30 minutes
+#BSUB -o simulate100_numba_24_%J.out      # Standard output will be saved to a file with the job-id
+#BSUB -e simulate100_numba_24_%J.err      # Standard error will be saved to a file with the job-id
+
+source /dtu/projects/02613_2025/conda/conda_init.sh
+conda activate 02613
+
+echo "Job started on $(hostname) at $(date)"
+
+start_time=$(date +%s)
+
+# Run the simulation with detailed timing info
+/usr/bin/time -v python simulate_parallel_numba.py 1
+
+end_time=$(date +%s)
+runtime=$((end_time - start_time))
+
+echo "Total runtime: ${runtime} seconds"
+echo "Job finished at $(date)"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.72 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     1024.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   23 sec.
+    Turnaround time :                            5 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <simulate100_numba_24_24747505.err> for stderr output of this job.
+

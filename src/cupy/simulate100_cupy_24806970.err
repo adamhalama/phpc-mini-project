@@ -1,0 +1,9 @@
+Loaded module: cuda/11.8
+WARNING: CPU IP/backtrace sampling not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+WARNING: CPU context switch tracing not supported, disabling.
+Try the 'nsys status --environment' command to learn more.
+
+/zhome/af/3/214532/.lsbatch/1745647457.24806970.shell: line 31: unexpected EOF while looking for matching `"'
+/zhome/af/3/214532/.lsbatch/1745647457.24806970.shell: line 33: syntax error: unexpected end of file

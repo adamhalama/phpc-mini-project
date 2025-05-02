@@ -1,0 +1,73 @@
+Job started on n-62-31-22 at Tue Apr  8 13:15:08 CEST 2025
+Total runtime: 0 seconds
+Job finished at Tue Apr  8 13:15:08 CEST 2025
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 24597944: <simulate20> in cluster <dcc> Done
+
+Job <simulate20> was submitted from host <gbarlogin1> by user <s243749> in cluster <dcc> at Tue Apr  8 13:15:05 2025
+Job was executed on host(s) <n-62-31-22>, in queue <hpc>, as user <s243749> in cluster <dcc> at Tue Apr  8 13:15:06 2025
+</zhome/af/3/214532> was used as the home directory.
+</zhome/af/3/214532/PyHPC/mini-project> was used as the working directory.
+Started at Tue Apr  8 13:15:06 2025
+Terminated at Tue Apr  8 13:15:08 2025
+Results reported at Tue Apr  8 13:15:08 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -q hpc                              # Submit to the hpc queue
+#BSUB -J simulate20                       # Job name: simulate20
+#BSUB -n 1                                # Request 1 core
+#BSUB -R "span[hosts=1]"                  # Ensure the job runs on a single host
+#BSUB -R "rusage[mem=2GB]"                # Request 4GB memory per core
+#BSUB -R "select[model == XeonGold6126]"  # Request a specific CPU model
+#BSUB -M 3GB                              # Kill the job if it exceeds 5GB per core
+#BSUB -W 00:30                            # Set the walltime limit to 30 minutes
+#BSUB -o simulate20_%J.out                # Standard output will be saved to a file with the job-id
+#BSUB -e simulate20_%J.err                # Standard error will be saved to a file with the job-id
+
+source /dtu/projects/02613_2025/conda/conda_init.sh
+conda activate 02613
+
+echo "Job started on $(hostname) at $(date)"
+
+start_time=$(date +%s)
+
+# Run the simulation with detailed timing info
+/usr/bin/time -v python visualize.py
+
+end_time=$(date +%s)
+runtime=$((end_time - start_time))
+
+echo "Total runtime: ${runtime} seconds"
+echo "Job finished at $(date)"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   1.06 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     2048.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   64 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <simulate20_24597944.err> for stderr output of this job.
+

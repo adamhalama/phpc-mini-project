@@ -1,0 +1,71 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 24657142: <simulate100-2cx2> in cluster <dcc> Exited
+
+Job <simulate100-2cx2> was submitted from host <gbarlogin1> by user <s243749> in cluster <dcc> at Sun Apr 13 19:23:26 2025
+Job was executed on host(s) <2*n-62-31-7>, in queue <hpc>, as user <s243749> in cluster <dcc> at Sun Apr 13 19:23:26 2025
+</zhome/af/3/214532> was used as the home directory.
+</zhome/af/3/214532/PyHPC/mini-project/src> was used as the working directory.
+Started at Sun Apr 13 19:23:26 2025
+Terminated at Mon Apr 21 14:04:44 2025
+Results reported at Mon Apr 21 14:04:44 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -q hpc                              # Submit to the hpc queue
+#BSUB -J simulate100-2cx2                       # Job name: simulate20
+#BSUB -n 2                                # Request 1 core
+#BSUB -R "span[hosts=1]"                  # Ensure the job runs on a single host
+#BSUB -R "rusage[mem=2GB]"                # Request xGB memory per core
+#BSUB -R "select[model == XeonGold6126]"  # Request a specific CPU model
+#BSUB -M 3GB                              # Kill the job if it exceeds xGB per core
+#BSUB -W 00:30                            # Set the walltime limit to 30 minutes
+#BSUB -o simulate100_2x2_%J.out                # Standard output will be saved to a file with the job-id
+#BSUB -e simulate100_2x2%J.err                # Standard error will be saved to a file with the job-id
+
+source /dtu/projects/02613_2025/conda/conda_init.sh
+conda activate 02613
+
+echo "Job started on $(hostname) at $(date)"
+
+start_time=$(date +%s)
+
+# Run the simulation with detailed timing info
+/usr/bin/time -v python simulate_parallel.py 100
+
+end_time=$(date +%s)
+runtime=$((end_time - start_time))
+
+echo "Total runtime: ${runtime} seconds"
+echo "Job finished at $(date)"
+
+------------------------------------------------------------
+
+TERM_OWNER: job killed by owner.
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1813.34 sec.
+    Max Memory :                                 958 MB
+    Average Memory :                             957.55 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               3138.00 MB
+    Max Swap :                                   -
+    Max Processes :                              53
+    Max Threads :                                57
+    Run time :                                   93 sec.
+    Turnaround time :                            672078 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <simulate100_2x224657142.err> for stderr output of this job.
+

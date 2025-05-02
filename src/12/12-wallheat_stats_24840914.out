@@ -1,0 +1,70 @@
+Started on n-62-31-5 at Wed Apr 30 20:23:47 CEST 2025
+Buildings analysed: 4571
+Average mean temperature:      14.62 °C
+Average temperature std-dev:   6.77 °C
+≥50 % of area above 18 °C:      750 buildings
+≥50 % of area below 15 °C:      2526 buildings
+Finished at Wed Apr 30 20:25:31 CEST 2025
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 24840914: <wallheat_stats> in cluster <dcc> Done
+
+Job <wallheat_stats> was submitted from host <gbarlogin1> by user <s243749> in cluster <dcc> at Wed Apr 30 20:23:46 2025
+Job was executed on host(s) <n-62-31-5>, in queue <hpc>, as user <s243749> in cluster <dcc> at Wed Apr 30 20:23:46 2025
+</zhome/af/3/214532> was used as the home directory.
+</zhome/af/3/214532/PyHPC/mini-project/src> was used as the working directory.
+Started at Wed Apr 30 20:23:46 2025
+Terminated at Wed Apr 30 20:25:31 2025
+Results reported at Wed Apr 30 20:25:31 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+#BSUB -q hpc
+#BSUB -J wallheat_stats
+#BSUB -n 1                       
+#BSUB -R "span[hosts=1]"                  
+#BSUB -R "rusage[mem=2GB]"
+#BSUB -M 2GB                              # Kill the job if it exceeds xGB per core
+#BSUB -W 00:30
+#BSUB -o wallheat_stats_%J.out
+#BSUB -e wallheat_stats_%J.err
+
+echo "Started on $(hostname) at $(date)"
+
+
+source /dtu/projects/02613_2025/conda/conda_init.sh
+conda activate 02613
+
+/usr/bin/time -v python 12-analyse-wallheat.py
+
+echo "Finished at $(date)"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   35.37 sec.
+    Max Memory :                                 116 MB
+    Average Memory :                             113.33 MB
+    Total Requested Memory :                     2048.00 MB
+    Delta Memory :                               1932.00 MB
+    Max Swap :                                   -
+    Max Processes :                              5
+    Max Threads :                                7
+    Run time :                                   117 sec.
+    Turnaround time :                            105 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <wallheat_stats_24840914.err> for stderr output of this job.
+

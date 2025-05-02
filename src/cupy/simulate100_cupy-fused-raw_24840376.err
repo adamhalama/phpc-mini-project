@@ -1,0 +1,34 @@
+Loaded module: cuda/11.8
+Traceback (most recent call last):
+  File "/zhome/af/3/214532/PyHPC/mini-project/src/simulate_cupy_fused_raw.py", line 106, in <module>
+    u_final = jacobi_gpu(u, interior_mask, MAX_ITER)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/zhome/af/3/214532/PyHPC/mini-project/src/simulate_cupy_fused_raw.py", line 53, in jacobi_gpu
+    u_new[1:-1, 1:-1] = jacobi_kernel(
+                        ^^^^^^^^^^^^^^
+  File "cupy/_core/raw.pyx", line 78, in cupy._core.raw.RawKernel.__call__
+TypeError: __call__() takes exactly 3 positional arguments (6 given)
+Command exited with non-zero status 1
+	Command being timed: "python simulate_cupy_fused_raw.py 100"
+	User time (seconds): 0.50
+	System time (seconds): 0.39
+	Percent of CPU this job got: 65%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.36
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 259948
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 25672
+	Voluntary context switches: 3438
+	Involuntary context switches: 10
+	Swaps: 0
+	File system inputs: 72
+	File system outputs: 16
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
