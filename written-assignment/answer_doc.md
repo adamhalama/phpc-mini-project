@@ -1,14 +1,24 @@
 # 1 Familiarize yourself with the data. Load and visualize the input data for a few floorplans using a seperate Python script, Jupyter notebook or your preferred tool.
 
 
+
 # 2. Familiarize yourself with the provided script. Run and time the reference implementation for a small subset of floorplans (e.g., 10 - 20). 
 
 - **How long do you estimate it would take to process all the floorplans? Perform the timing as a batch job so you get relieable results.**
 
-
 - Elapsed (wall clock) time (h:mm:ss or m:ss): 3:56.88 (for 20 floorplans)
+```
+Time for 20 floorplans: 237.0 seconds
+Estimated total time: 54166.4 seconds
+Which is approximately: 15h 2m 46s
+```
+
+so would take quite some amount of time
 
 # 3. Visualize the simulation results for a few floorplans.
+
+[floorplan-visualization](../simulation_plots/10000_plot.png)
+- other visualizations are in `../simulation_plots/*`
 
 # 4. Profile the reference jacobi function using kernprof. Explain the different parts of the function and how much time each part takes.
 
@@ -63,10 +73,10 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
 
 
-l18 so seems like the computations on line 18 took the majority of the time, which makes sense since thats where the computations happen.
-l19 also like 19 took significant time when copying the computed interior values into a separate array.
-l20 calculating the convergence criteria also takes up a significant amount of time
-l21 Assigning the updated temperature values back to the main array also is significant
+- l18 so seems like the computations on line 18 took the majority of the time, which makes sense since thats where the computations happen.
+- l19 also like 19 took significant time when copying the computed interior values into a separate array.
+- l20 calculating the convergence criteria also takes up a significant amount of time
+- l21 Assigning the updated temperature values back to the main array also is significant
 
 
 # 5. Make a new Python program where you parallelize the computations over the floorplans. 
@@ -105,8 +115,7 @@ Observed maximum speed-up: 7.61 on 12 cores
 Achieved 82.60% of theoretical maximum
 ```
 
-this means maybe we can throw more cores at it and make it a bit more fast, we'll try and see.
-
+- this means that with this script maybe we can throw more cores at it and make it a bit more fast, we'll try and see.
 
 
 ## d) How long would you estimate it would take to process all floorplans using your fastest parallel solution?
@@ -236,6 +245,9 @@ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  St
 
 - we already have a paralellised Numba kernel, so we can use that, its very fast with just 32 seconds for 100 floorplans.  (25min for all)
 - if we parralelize this into few jobs, we can bring it down significantly.
+
+- So after using job arrays (first looking for idle cpus w/ `nodestat -F | grep "Idle"`) and then picking one that has a lot of nodes ready to be used, then checking how many cores does each have, setting the batch script accordingly and then just running it
+- we ran array of 10 jobs, the walltimes of them ranged from 2 minutes to `5:36.08`, which was the time for all the to be completed.
 
 
 # 12. Process all floorplans using one of your implementations (ideally a fast one) and answer the below questions.
