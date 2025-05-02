@@ -1,6 +1,7 @@
 # 1 Familiarize yourself with the data. Load and visualize the input data for a few floorplans using a seperate Python script, Jupyter notebook or your preferred tool.
 
-
+[vizualized-input-data](../src/1/figures/floorplan_10000.png)
+- here we can see the 
 
 # 2. Familiarize yourself with the provided script. Run and time the reference implementation for a small subset of floorplans (e.g., 10 - 20). 
 
