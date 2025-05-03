@@ -1,3 +1,4 @@
 /simulation_results
 src/cupy/cupy_profile.nsys-rep
 src/cupy/cupy_profile.sqlite
+__pycache__/

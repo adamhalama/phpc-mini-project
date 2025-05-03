@@ -24,7 +24,7 @@ Which is approximately: 15h 2m 46s
 # 4. Profile the reference jacobi function using kernprof. Explain the different parts of the function and how much time each part takes.
 
 ```
-gbarlogin1(s243749) $ python -m line_profiler simulate.py.lprof
+$ python -m line_profiler simulate.py.lprof
 Timer unit: 1e-06 s
 Total time: 199.086 s
 File: simulate.py
